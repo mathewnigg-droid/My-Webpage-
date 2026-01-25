@@ -413,26 +413,41 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
 
-<!-- YOUR CONTACT FORM SCRIPT -->
 <script>
-document.getElementById("contactForm").addEventListener("submit", function (e) {
-	e.preventDefault();
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+	e.preventDefault(); // prevent page reload / keep animation
 
 	const name = document.getElementById("name").value;
 	const email = document.getElementById("email").value;
 	const message = document.getElementById("message").value;
 
-	const mailtoLink =
-		"mailto:mathewnigg@gmail.com" +
-		"?subject=Contact from " + encodeURIComponent(name) +
-		"&body=" +
-		encodeURIComponent(
-			"Name: " + name + "\n" +
-			"Email: " + email + "\n\n" +
-			message
-		);
+	// simple mobile check
+	const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-	window.location.href = mailtoLink;
+	if(isMobile) {
+		// open default email app
+		const mailtoLink =
+			"mailto:mathewnigg@gmail.com" +
+			"?subject=" + encodeURIComponent("Contact from " + name) +
+			"&body=" + encodeURIComponent(
+				"Name: " + name + "\n" +
+				"Email: " + email + "\n\n" +
+				message
+			);
+		window.location.href = mailtoLink;
+	} else {
+		// open Gmail compose for desktop
+		const gmailLink =
+			"https://mail.google.com/mail/?view=cm&fs=1" +
+			"&to=mathewnigg@gmail.com" +
+			"&su=" + encodeURIComponent("Contact from " + name) +
+			"&body=" + encodeURIComponent(
+				"Name: " + name + "\n" +
+				"Email: " + email + "\n\n" +
+				message
+			);
+		window.open(gmailLink, "_blank");
+	}
 });
 </script>
 
